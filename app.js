@@ -16,7 +16,7 @@ const { connectDB } = require('./config/Db')
 
 
 app.get('/', (req, res) => {
-    res.json({ message: 'Hello world' })
+    res.json({ message: 'Hello Welcome to my blog App' })
 })
 app.use(express.json())
 app.use(cors())
