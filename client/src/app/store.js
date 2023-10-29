@@ -6,6 +6,6 @@ import BlogReducers from '../Reducers/BlogReducers';
 export const store = configureStore({
   reducer: {
     user: reducerSlice,
-    todos: BlogReducers
+    blogs: BlogReducers
   },
 });

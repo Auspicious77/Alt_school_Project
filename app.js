@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const PORT = 5000
+const PORT = 3000
 const cors = require('cors')
 const mongoose = require('mongoose')
 const User = require('./models/Users')
@@ -100,22 +100,22 @@ app.post('/signin', async (req, res) => {
 //Blog
 app.post('/createblog', requireLogin,async (req, res) => {
     const data = await new Blog({
-        todo: req.body.todo,
-        todoBy: req.user
+        blog: req.body.blog,
+        blogBy: req.user
     }).save()
     res.status(201).json({message: data})
 })
 
 app.get('/getblogs',  requireLogin,async (req, res) => {
     const data = await Blog.find({
-    todoBy:req.user
+    blogBy:req.user
     })
     res.status(200).json({message: data})
 })
 
 app.delete('/remove/:Id',requireLogin ,async(req, res)=>{
-   const removedTodo = await Blog.findOneAndRemove({_id: req.params.Id})
-   res.status(200).json({message: removedTodo})
+   const removedBlog = await Blog.findOneAndRemove({_id: req.params.Id})
+   res.status(200).json({message: removedBlog})
 
 })
 

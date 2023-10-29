@@ -4,14 +4,14 @@ const initialState = []
 
 export const createBlog = createAsyncThunk(
     'createBlog', async(body)=>{
-     const result = await fetch2('/createBlog', body)
+     const result = await fetch2('/createblog', body)
      return result
     }
 )
 
 export const fetchBlog = createAsyncThunk(
     'fetchBlog', async(body)=>{
-     const result = await fetch3('/getblog', body)
+     const result = await fetch3('/getblogs', body)
      return result
     }
 )
@@ -23,7 +23,7 @@ export const deleteBlog = createAsyncThunk(
     }
 )
 
-const TodoReducers = createSlice({
+const BlogReducers = createSlice({
 name: 'blog',
 initialState, 
 reducers: {},
@@ -39,11 +39,11 @@ extraReducers: (builder) => {
     })
 
     builder.addCase(deleteBlog.fulfilled, (state, {payload: {message}}) => {
-      const removeTodo =  state.filter(item => {
-            return item._id != message._id
+      const removeBlog =  state.filter(item => {
+            return item._id !== message._id
         })
 
-        return removeTodo
+        return removeBlog
     })
 }
 })
