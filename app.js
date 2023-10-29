@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const PORT = 5000
@@ -7,19 +8,12 @@ const User = require('./models/Users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET, MONGOURL} = require('./config/keys')
-const Todo = require('./models/Todos')
+const Blog = require('./models/Blogs')
+const { connectDB } = require('./config/Db')
 
 
 
- 
-mongoose.connect(MONGOURL,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-mongoose.connection.on('connected', () => { console.log("Connected to mongo yeahhhh!") })
 
-mongoose.connection.on('error', (err) => { console.log("error", err) })
 
 app.get('/', (req, res) => {
     res.json({ message: 'Hello world' })
@@ -44,6 +38,7 @@ const requireLogin = (req, res, next) => {
 }
 
 app.get('/test', requireLogin, (req, res) => {
+    console.log('connected')
 res.json({message: req.user})
 })
 
@@ -102,24 +97,24 @@ app.post('/signin', async (req, res) => {
     }
 })
 
-//Todo
-app.post('/createtodo', requireLogin,async (req, res) => {
-    const data = await new Todo({
+//Blog
+app.post('/createblog', requireLogin,async (req, res) => {
+    const data = await new Blog({
         todo: req.body.todo,
         todoBy: req.user
     }).save()
     res.status(201).json({message: data})
 })
 
-app.get('/gettodos',  requireLogin,async (req, res) => {
-    const data = await Todo.find({
+app.get('/getblogs',  requireLogin,async (req, res) => {
+    const data = await Blog.find({
     todoBy:req.user
     })
     res.status(200).json({message: data})
 })
 
 app.delete('/remove/:Id',requireLogin ,async(req, res)=>{
-   const removedTodo = await Todo.findOneAndRemove({_id: req.params.Id})
+   const removedTodo = await Blog.findOneAndRemove({_id: req.params.Id})
    res.status(200).json({message: removedTodo})
 
 })
@@ -132,7 +127,9 @@ if(process.env.NODE_ENV == 'production'){
     }) 
 }
 
+connectDB().then(()=> {
 
-app.listen(PORT, () => {
-    console.log("Server Running on", PORT) 
+    app.listen(PORT, () => {
+        console.log("Server Running on", PORT) 
+    })
 })

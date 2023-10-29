@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { createTodo, deleteTodo, fetchTodo } from '../Reducers/TodoReducers'
+import { createBlog, deleteBlog, fetchBlog } from '../Reducers/BlogReducers'
 import {logout} from '../Reducers/AuthReducer'
 
-function Todo() {
-    const [mytodo, setTodo] = useState('')
+function Blog() {
+    const [myBlog, setBlog] = useState('')
     const dispatch = useDispatch()
-    const todos = useSelector(state => state.todos)
-    const AddTodo = () => {
-        dispatch(createTodo({ todo: mytodo }))
+    const Blogs = useSelector(state => state.Blogs)
+    const AddBlog = () => {
+        dispatch(createBlog({ Blog: myBlog }))
     }
     useEffect(() => {
-        dispatch(fetchTodo())
+        dispatch(fetchBlog())
     }, [])
     return (
         <div>
             <input
-                placeholder='Add Todo'
-                value={mytodo}
-                onChange={(e) => setTodo(e.target.value)}
+                placeholder='Add Blog'
+                value={myBlog}
+                onChange={(e) => setBlog(e.target.value)}
             />
 
             <button className='btn #ff4081 pink accent-2' 
-                onClick={() => AddTodo()}> Add Todo</button>
+                onClick={() => AddBlog()}> Add Blog</button>
 
             <ul className="collection">
-                {todos.map(item => {
+                {Blogs.map(item => {
                   return <li className="collection-item" key={item._id}
-                  onClick = {()=>dispatch(deleteTodo(item._id))}>{item.todo}</li>
+                  onClick = {()=>dispatch(deleteBlog(item._id))}>{item.Blog}</li>
 
                 })
                 }
@@ -39,4 +39,4 @@ function Todo() {
     )
 }
 
-export default Todo
+export default Blog

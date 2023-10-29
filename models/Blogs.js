@@ -2,15 +2,15 @@ const mongoose = require('mongoose')
 
 const {ObjectId} = mongoose.Schema.Types
 
-const todoSchema = mongoose.Schema({
-    todo: {
+const blogSchema = mongoose.Schema({
+    blog: {
         type: String,
         required: true
     },
-    todoBy: {
+    blogBy: {
         type: ObjectId,
         ref: "User"
     }
 })
 
-module.exports = mongoose.model('Todo', todoSchema)
+module.exports = mongoose.model('Blog', blogSchema)
